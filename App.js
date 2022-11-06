@@ -1,16 +1,29 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from './src/Screen/Home'
-import About from './src/Screen/About'
+import Dash from './src/Screen/Dash'
+import SplashScreen from 'react-native-splash-screen'
+
 const Stack = createNativeStackNavigator();
+
 const App = () => {
+  // useEffect(()=>{
+  //   setTimeout(() => {
+  //     setShowSplash(false)
+  //   }, 4000);
+  // },[])
+  useEffect(()=>{
+    SplashScreen.hide();
+  },[])
   return (
   <NavigationContainer>
-   <Stack.Navigator initialRouteName='Home'>
+   <Stack.Navigator  screenOptions={{
+    headerShown:false
+   }}>
    <Stack.Screen name='Home' component={Home} />
-    <Stack.Screen name='About' component={About} />
+   <Stack.Screen name='Dash' component={Dash} />
+ 
    </Stack.Navigator>
   </NavigationContainer>
   )
