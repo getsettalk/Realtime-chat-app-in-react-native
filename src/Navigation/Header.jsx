@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity } from 'react-native'
 import React, { memo } from 'react'
 
-const Header = ({totalUser,thisUser}) => {
+const Header = ({ totalUser, thisUser }) => {
     // console.log(totalUser)
     // const volume = require('../../assets/icon/volume.png')
     // const mute = require('../../assets/icon/mute.png')
@@ -12,14 +12,14 @@ const Header = ({totalUser,thisUser}) => {
             <StatusBar backgroundColor={'#000033'} animated={true} translucent={false} showHideTransition={'slide'} />
             <View style={[{ display: 'flex', flexDirection: 'column' }]}>
                 <Text style={[styles.text, { fontSize: 22.5, fontWeight: 'bold', letterSpacing: 0.9 }]}>Vchat</Text>
-                <Text style={[styles.text, { color: "#b3ffb1", letterSpacing: 0.035, width: 150,textTransform:'capitalize'}]}>{thisUser} </Text>
+                <Text style={[styles.text, { color: "#b3ffb1", letterSpacing: 0.035, width: 150, textTransform: 'capitalize' }]}>{thisUser} </Text>
             </View>
             <View style={styles.dflex}>
-             
+
                 <View>
-                    <TouchableOpacity style={{display:'flex',flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
-                        <Image source={team} style={[styles.icon,{width:27,height:27}]} />
-                        <Text style={[styles.text,{paddingLeft:1.28,color:'#99ff99'}]}>{totalUser}</Text>
+                    <TouchableOpacity style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+                        <Image source={team} style={[styles.icon, { width: 27, height: 27 }]} />
+                        <Text style={[styles.text, { paddingLeft: 1.28, color: '#99ff99' }]}>{totalUser}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -30,6 +30,7 @@ const Header = ({totalUser,thisUser}) => {
 
 const styles = StyleSheet.create({
     headerBox: {
+
         width: '100%',
         height: 55,
         backgroundColor: '#000033',

@@ -1,4 +1,4 @@
-import { View, Text, ToastAndroid, TextInput, TouchableOpacity, Image, StyleSheet, useWindowDimensions, KeyboardAvoidingView, Platform } from 'react-native'
+import { View, Text, ToastAndroid, TextInput, TouchableOpacity, Image, StyleSheet, useWindowDimensions, KeyboardAvoidingView, Platform, useColorScheme } from 'react-native'
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'react-native';
@@ -11,13 +11,13 @@ import { ActivityIndicator } from 'react-native';
 // connection with socket.io server at glitch.com
 let totalUser = 0;
 
-const socket = io('https://sudsy-yummy-wisteria.glitch.me/');
+const socket = io('https://lake-foggy-port.glitch.me');
+// const socket = io('https://sudsy-yummy-wisteria.glitch.me/');
 
 
 
 const Dash = () => {
-
-
+    const isDarkMode = useColorScheme() === 'dark';
     const [userNumber, setuserNumber] = useState(totalUser)
 
     const { width } = useWindowDimensions();
@@ -78,11 +78,11 @@ const Dash = () => {
             }
             setChat(oldArray => [...oldArray, newChatDatas])
             console.log("|otherUserDAta", otherUserDAta)
-
         })
-
-
     }, [])
+
+
+
     socket.on('status', function (reced) {
         console.log("connnected with server", reced)
         totalUser = reced;
@@ -107,17 +107,16 @@ const Dash = () => {
             setChat(oldArray => [...oldArray, newChatData])
             settypedMessge('')
         }
-        console.log(" im chatMess1")
+        console.log(" i m chatMess1")
     }, [typedMessge])
 
 
-    const allContent = <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={
-        Platform.select({
-            ios: () => 0,
-            android: () => -55
-        })()} style={{ backgroundColor: 'white' }}>
-        <View >
-
+    const allContent = <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 5}
+        style={{ flex: 1, }}
+    >
+        <View style={{backgroundColor: isDarkMode ? '#1d1d1d' : "#f7f7f7"}} >
             <Header totalUser={userNumber} thisUser={user} />
             {/* chat Box  */}
             <Msg data={chat} />
@@ -137,8 +136,11 @@ const Dash = () => {
 
                 elevation: 2,
             }}>
-                <TextInput style={[styles.TextBox, { width: width - 52, paddingLeft: 5 }]}
+                <TextInput style={[styles.TextBox, { width: width - 52, paddingLeft: 5, color: isDarkMode ? "#001C30" : "#001C30" }]}
                     placeholder="Write Messages here"
+                    placeholderTextColor={isDarkMode ? "#001C30" : "#777777"}
+                    maxLength={200}
+
                     multiline={true}
                     defaultValue={typedMessge}
                     onChangeText={(text) => settypedMessge(text)}
@@ -178,9 +180,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderBottomColor: 'gray',
         borderTopColor: 'gray',
-        borderBottomWidth: 1,
-        borderTopWidth: 1,
-        backgroundColor: '#f2f2f3',
+        // borderBottomWidth: 1,
+        // borderTopWidth: 1,
+        backgroundColor: '#e0e0e0',
         borderRadius: 20,
         fontSize: 16,
         shadowColor: "#000",

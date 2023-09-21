@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, FlatList,useWindowDimensions,Platform } from 'react-native'
+import { View, Text, StyleSheet, FlatList, useWindowDimensions, Platform, useColorScheme } from 'react-native'
 import React, { memo } from 'react'
 
 const Msg = (props) => {
-//    console.log("props.data",211)
-const { height } = useWindowDimensions();
-const scrHeight = height
+    //    console.log("props.data",211)
+    const isDarkMode = useColorScheme() === 'dark';
+    const { height } = useWindowDimensions();
+    const scrHeight = height
     function CMESSAGE(msg) {
         return (
             <View style={styles.Comebox}>
@@ -36,16 +37,16 @@ const scrHeight = height
     }
 
     return (
-        <View>
+        <View >
 
             <FlatList
                 // initialScrollIndex={props.data.length - 1}
-                inverted 
+                inverted
                 contentContainerStyle={{ flexDirection: 'column-reverse' }}
-                style={[styles.ScrBox]}
+                style={[styles.ScrBox, { backgroundColor: isDarkMode ? '#1d1d1d' : "#f7f7f7" }]}
                 data={props.data}
                 showsVerticalScrollIndicator={false}
-                
+
                 renderItem={(msg) => {
                     return (msg.item.type == 1 ? OMESSAGE(msg.item) : CMESSAGE(msg.item))
                 }}
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
         height: 'auto',
         // backgroundColor:'#e6e5e5',
         marginVertical: 4,
-        marginBottom:5,
+        marginBottom: 5,
         padding: 2,
         alignItems: 'flex-end',
         // float:'right'

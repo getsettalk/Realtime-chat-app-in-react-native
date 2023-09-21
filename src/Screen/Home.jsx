@@ -1,26 +1,28 @@
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, StatusBar, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, StatusBar, TextInput, useColorScheme } from 'react-native'
 import React, { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import { Alert } from 'react-native';
 
 const Home = ({ route, navigation }) => {
+
+  const isDarkMode = useColorScheme() === 'dark';
   const Source = require('../../assets/Images/Frame9.png');
-const [userName,setUserName] = useState('');
-// console.log(userName)
-const storeData = async (value) => {
-  try {
-    if(value !== ''){
-      await AsyncStorage.setItem('@uname', value);
-      navigation.navigate('Dash')
-    }else{
-      Alert.alert("Name is Required:","Please Enter Your Valid User Name.")
+  const [userName, setUserName] = useState('');
+  // console.log(userName)
+  const storeData = async (value) => {
+    try {
+      if (value !== '') {
+        await AsyncStorage.setItem('@uname', value);
+        navigation.navigate('Dash')
+      } else {
+        Alert.alert("Name is Required:", "Please Enter Your Valid User Name.")
+      }
+    } catch (e) {
+      console.log(e)
+      Alert.alert("Faild", e)
     }
-  } catch (e) {
-   console.log(e)
-   Alert.alert("Faild",e)
   }
-}
 
   return (
     <View style={styles.container}>
@@ -37,10 +39,14 @@ const storeData = async (value) => {
           <View style={styles.box}>
             {/* text input  */}
             <View >
-              <TextInput placeholder='Enter your valid name' maxLength={15} style={styles.input} defaultValue={userName}  onChangeText={(text)=>setUserName(text)}/>
+              <TextInput placeholder='Enter your valid name'
+                maxLength={15}
+                style={styles.input} defaultValue={userName}
+                onChangeText={(text) => setUserName(text)}
+                placeholderTextColor={isDarkMode ? "#001C30" : "#777777"} />
             </View>
 
-            <TouchableOpacity activeOpacity={'1'} onPress={()=>{
+            <TouchableOpacity activeOpacity={'1'} onPress={() => {
               console.log("Click to go")
               storeData(userName)
             }}>
@@ -54,11 +60,11 @@ const storeData = async (value) => {
               </LinearGradient>
             </TouchableOpacity>
             <View>
-            <Text style={{marginTop:25,color:'#8c8c8c'}}>Never Share Your Secrete to Strangers</Text>
-          </View>
+              <Text style={{ marginTop: 25, color: '#8c8c8c' }}>Never Share Your Secret to Strangers</Text>
+            </View>
           </View>
 
-         
+
         </LinearGradient>
       </ImageBackground>
     </View>
@@ -78,8 +84,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
+    borderTopRightRadius: 50,
     display: 'flex',
     // justifyContent:'center',
     alignItems: 'center'
@@ -89,12 +94,13 @@ const styles = StyleSheet.create({
     padding: 5,
     width: 250,
     marginTop: 20,
-    borderRadius: 6,
+    borderRadius: 0,
     paddingBottom: 7,
     fontSize: 17,
-    borderBottomColor:'#000046',
-    borderBottomWidth:3.3,
-    
+    borderBottomColor: '#000046',
+    borderBottomWidth: 3.3,
+    color: "#001C30"
+
   },
   btn: {
     // backgroundColor:'white',
@@ -106,10 +112,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  continue:{
-    fontSize:22,
-    fontWeight:'bold',
-    color:'white'
+  continue: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'white'
   }
 
 })
